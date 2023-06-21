@@ -55,8 +55,7 @@ contract SmartContract {
 
 ## Authors
 
-Metacrafter Chris\
-[@metacraftersio](https://github.com/metacraftersio)
+[Ayush Kathayat](https://github.com/Ayush-kathayat)
 
 ## License
 
