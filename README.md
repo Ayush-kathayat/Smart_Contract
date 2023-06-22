@@ -1,62 +1,104 @@
-# SmartContract
+# VoterSystem Smart Contract
 
-This Solidity program is a simple smart contract that demonstrates basic functionality for managing a balance. The purpose of this program is to showcase the usage of Solidity's require(), assert(), and revert() functions for input validation and transaction handling.
+This Solidity program is a simple smart contract that implements a basic voting system. It demonstrates the usage of control flow statements like `require`, `assert`, and `delete` to validate voter eligibility, manage candidate data, and handle voting operations.
 
 ## Description
 
-This program is a contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract includes two functions: `deposit` and `Revert`. 
+This smart contract is written in Solidity, a programming language used for creating smart contracts on the Ethereum blockchain. The contract consists of the following functions:
 
-The `deposit` function allows users to deposit a specified amount into the contract's balance. It includes input validation using the `require()` function to check if the amount is greater than zero and if the balance after the deposit will exceed the maximum balance allowed. The function updates the balance and uses the `assert()` function to ensure the balance stays within the maximum limit.
+- `vote`: Allows a voter to cast their vote for a specific candidate. It verifies that the voter meets the minimum age requirement, hasn't voted before, and selects a valid candidate.
 
-The `Revert` function demonstrates the use of the `revert()` function to explicitly revert a transaction. When called, the function will revert the transaction and provide a custom error message.
+- `addCandidate`: Adds a new candidate to the voting system. It ensures that the candidate doesn't already exist.
 
-This program can be used as a starting point for understanding input validation and transaction handling in Solidity smart contracts.
+- `deleteCandidate`: Removes a candidate from the voting system. It checks if the candidate exists and has no votes before deletion.
 
 ## Getting Started
 
-### Executing program
+### Prerequisites
 
-To run this program, you can use Remix, an online Solidity IDE. Follow the steps below:
+To interact with this smart contract, you'll need an Ethereum development environment, such as Remix IDE.
 
-1. Go to the Remix website at [https://remix.ethereum.org/](https://remix.ethereum.org/).
-2. Create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., SmartContract.sol).
-3. Copy and paste the following code into the file:
+### Execution
 
-```solidity
-// SPDX-License-Identifier: MIT
+To run this program, follow these steps:
+
+1. Open the Remix IDE by visiting https://remix.ethereum.org/.
+2. Create a new file in the IDE and save it with a `.sol` extension (e.g., `VoterSystem.sol`).
+3. ```
+   // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract SmartContract {
-    uint public balance;
-    uint public maxBalance = 100;
+// This is a simple Smart Contract to demonstrate the control flow statements present in Solidity
+// It simulates a Voting System
 
-    function deposit(uint amount) external {
-        // Use require() to validate input conditions
-        require(amount > 0, "Amount must be greater than zero");
-        require(balance + amount <= maxBalance, "Exceeds maximum balance");
+contract VoterSystem {
+    uint public votingAge = 18; // Minimum age required for a voter
 
-        // Update the balance
-        balance += amount;
+    // Mapping to track whether an address has voted or not
+    mapping(address => bool) public hasVoted;
 
-        // Use assert() to validate internal conditions
-        assert(balance <= maxBalance);
+    // Mapping to store the number of votes received by each candidate
+    mapping(address => uint) public candidateVotes;
+
+    // Mapping to track valid candidates
+    mapping(address => bool) public isCandidate;
+
+
+    // Function for a voter to cast their vote
+    function vote(address _candidate, uint age) external {
+
+        // Check if the voter meets the minimum age requirement
+
+        if(age < votingAge)
+        {
+            revert("Voter must be at least 18 years old.");
+        }
+       
+        // Check if the voter has not already voted
+        assert(!hasVoted[msg.sender]);
+
+        // Check if the candidate is valid
+        require(isCandidate[_candidate], "Invalid candidate.");
+
+        // Increment the vote count for the selected candidate
+        candidateVotes[_candidate]++;
+
+        // Mark the voter as having voted
+        hasVoted[msg.sender] = true;
     }
 
-    function Revert() external pure {
-        // Use revert() to explicitly revert the transaction
-        revert("Explicitly reverting the transaction");
+    // Function to add a candidate to the system
+    function addCandidate(address _candidate) external {
+        // Check if the candidate doesn't already exist
+        require(!isCandidate[_candidate], "Candidate already exists.");
+
+        // Add the candidate to the system
+        isCandidate[_candidate] = true;
+    }
+
+    // Function to delete a candidate from the system
+    function deleteCandidate(address _candidate) external {
+        // Check if the candidate exists
+        require(isCandidate[_candidate], "Candidate does not exist.");
+
+        // Check if the candidate has no votes before deleting
+        require(candidateVotes[_candidate] == 0, "Cannot delete candidate with votes.");
+
+        // Delete the candidate from the system
+        delete isCandidate[_candidate];
     }
 }
-```
 
-4. To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.0" (or another compatible version), and then click on the "Compile SmartContract.sol" button.
-
-5. Once the code is compiled, you can interact with the contract by deploying and calling its functions.
+   ```  
+4. Copy and paste the provided code snippet into the file.
+5. Compile the code by selecting the "Solidity Compiler" tab, ensuring the compiler version is set to `0.8.0`, and clicking on "Compile VoterSystem.sol".
+6. Deploy the smart contract by switching to the "Deploy & Run Transactions" tab and clicking on "Deploy" (ensure you have the appropriate network selected).
+7. Interact with the contract by calling its functions, such as `vote`, `addCandidate`, and `deleteCandidate`.
 
 ## Authors
 
-[Ayush Kathayat](https://github.com/Ayush-kathayat)
+Ayush Kathayat
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE.md](https://license.md/) file for details.
+This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
