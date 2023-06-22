@@ -99,8 +99,8 @@ contract VoterSystem {
 
 ## Authors
 
-Ayush Kathayat
+[Ayush Kathayat](https://github.com/Ayush-kathayat)
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License. See the [LICENSE.md](https://license.md/)https://license.md/) file for details.
