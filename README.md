@@ -103,4 +103,4 @@ contract VoterSystem {
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE.md](https://license.md/)https://license.md/) file for details.
+This project is licensed under the MIT License. See the [LICENSE.md](https://license.md/) file for details.
