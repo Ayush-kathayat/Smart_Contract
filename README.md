@@ -24,7 +24,9 @@ To run this program, follow these steps:
 
 1. Open the Remix IDE by visiting https://remix.ethereum.org/.
 2. Create a new file in the IDE and save it with a `.sol` extension (e.g., `VoterSystem.sol`).
-3. ```
+
+ 
+ ```
    // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -88,12 +90,12 @@ contract VoterSystem {
         delete isCandidate[_candidate];
     }
 }
+```
 
-   ```  
-4. Copy and paste the provided code snippet into the file.
-5. Compile the code by selecting the "Solidity Compiler" tab, ensuring the compiler version is set to `0.8.0`, and clicking on "Compile VoterSystem.sol".
-6. Deploy the smart contract by switching to the "Deploy & Run Transactions" tab and clicking on "Deploy" (ensure you have the appropriate network selected).
-7. Interact with the contract by calling its functions, such as `vote`, `addCandidate`, and `deleteCandidate`.
+3. Copy and paste the provided code snippet into the file.
+4. Compile the code by selecting the "Solidity Compiler" tab, ensuring the compiler version is set to `0.8.0`, and clicking on "Compile VoterSystem.sol".
+5. Deploy the smart contract by switching to the "Deploy & Run Transactions" tab and clicking on "Deploy" (ensure you have the appropriate network selected).
+6. Interact with the contract by calling its functions, such as `vote`, `addCandidate`, and `deleteCandidate`.
 
 ## Authors
 
